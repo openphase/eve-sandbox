@@ -11,7 +11,7 @@ def nameFix(cn)
 end
 
 
-api = EAAL::API.new(API_KEYID, API_VCODE)
+api = EAAL::API.new(API_KEYID_ACCOUNT, API_VCODE_ACCOUNT)
 result = api.Characters
 result.characters.each{|character|
 	print "#{character.name} is part of #{character.corporationName} #{nameFix(character.allianceName)}\n"
