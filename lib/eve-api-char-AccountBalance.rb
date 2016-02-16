@@ -11,21 +11,19 @@ def nameFix(cn)
 	end
 end
 
-api = EAAL::API.new(API_KEYID_ACCOUNT, API_VCODE_ACCOUNT)
-result = api.Characters
-characterIDS = Hash.new
-result.characters.each{|character|
-	#characterID
-	#name
-	characterIDS[character.name] = character.characterID
-}
-
-pp characterIDS
+API_KEYS.keys.each do |key| 
+	api = EAAL::API.new(API_KEYS[key][:apikeyid], API_KEYS[key][:apivcode])
+	result = api.Characters
+	characterIDS = Hash.new
+	result.characters.each do |c|
+		characterIDS[c.name] = c.characterID
+		print "Character Name: #{c.name} Character ID: #{c.characterID}\n"		
+	end
+end
 
 characterIDS.keys.each do |k|
-	api = EAAL::API.new(API_KEYID_ACCOUNT,API_VCODE_ACCOUNT, API_SCOPE_CHARACTER)
+	api = EAAL::API.new(API_KEYID_ACCOUNT,API_VCODE_ACCOUNT, "Char")
 	result = api.AccountBalance("characterID" => characterIDS[k].to_s)
-	pp result
-	#pp api
+
 	print "Character Name: #{k} Balance: #{result.accounts[0].balance}\n"
 end

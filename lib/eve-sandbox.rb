@@ -10,10 +10,13 @@ def nameFix(cn)
 	end
 end
 
+API_KEYS.keys.each do |k|
+  api = EAAL::API.new( API_KEYS[k][:apikeyid], API_KEYS[k][:apivcode])
+  char_api= api.Characters
+  char_api.characters.each do |char|
+    print "Character Name: #{char.name} Character ID: #{char.characterID}\n"
+    print "Avatar Image: https://image.eveonline.com/Character/#{char.characterID}_256.jpg\n"
+  end
 
-api = EAAL::API.new(API_KEYID_ACCOUNT, API_VCODE_ACCOUNT)
-result = api.Characters
-result.characters.each{|character|
-	print "#{character.name} is part of #{character.corporationName} #{nameFix(character.allianceName)}\n"
-	print "The image would be found at https://image.eveonline.com/Character/#{character.characterID}_256.jpg\n"
-}
+end
+
